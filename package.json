@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "scripts": {
+    "build:wasm-st": "wasm-pack build --target web -- --no-default-features",
+    "build:wasm-mt": "cross-env RUSTFLAGS=\"-C target-feature=+atomics,+bulk-memory,+mutable-globals\" rustup run nightly-2022-04-07 wasm-pack build --target web --out-dir pkg-parallel -- --features parallel -Z build-std=panic_abort,std",
+    "build:wasm": "run-p build:wasm-st build:wasm-mt",
+    "build": "npm run build:wasm && npm run rollup:build",
+    "rollup:build": "rollup -c",
+    "rollup:watch": "rollup -c -w",
+    "dev": "npm run rollup:watch"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-html": "^0.2.4",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
+    "@surma/rollup-plugin-off-main-thread": "^2.2.3",
+    "@tsconfig/svelte": "^2.0.0",
+    "@web/rollup-plugin-import-meta-assets": "^1.0.7",
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.72.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "serve": "^14.0.1",
+    "svelte": "^3.0.0",
+    "svelte-check": "^2.0.0",
+    "svelte-preprocess": "^4.0.0",
+    "tslib": "^2.0.0",
+    "typescript": "^4.0.0",
+    "wasm-pack": "=0.10.1"
+  },
+  "dependencies": {
+    "comlink": "^4.3.1",
+    "wasm-feature-detect": "^1.2.11"
+  }
+}
